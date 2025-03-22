@@ -11,6 +11,7 @@ public class PlayerStatus : MonoBehaviour
     public int digForce;
     public int defenceForce;
     public float flyForce;
+    public int maxSpeed;
     [SerializeField]
     private int curhealth;
     [SerializeField]

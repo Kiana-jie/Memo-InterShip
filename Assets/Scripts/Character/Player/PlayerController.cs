@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //PhysicCheck();
+        
         HandleDig();
     }
 
@@ -31,17 +31,18 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleFly();
+        //SpeedLimit();
     }
     public void HandleMovement()
     {
         if (Input.GetKey(KeyCode.LeftArrow)){
             transform.localScale = new Vector3(-1,1,1);
-            rb.velocity = new Vector2(-status.speed, rb.velocity.y);
+            rb.velocity = new Vector2(-status.speed , rb.velocity.y);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, 1, 1);
-            rb.velocity = new Vector2(status.speed, rb.velocity.y);//可能出bug的地方
+            rb.velocity = new Vector2(status.speed , rb.velocity.y);//可能出bug的地方
             
         }
 
@@ -50,11 +51,23 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);
+              rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);   
         }
     }
     public void HandleDig()
     {
         
+    }
+    public void SpeedLimit()
+    {
+        if(rb.velocity.y < -status.maxSpeed )
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -status.maxSpeed);
+        }
+
+        else if (rb.velocity.y > status.maxSpeed)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, status.maxSpeed);
+        }
     }
 }
