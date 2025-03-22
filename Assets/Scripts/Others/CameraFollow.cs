@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour
     public Transform leftBounds;
     public Transform rightBounds;
     public Transform aboveBounds;  // New variable for upper bounds
-    //public Transform belowBounds;   // New variable for lower bounds
+    public Transform belowBounds;   // New variable for lower bounds
 
     // Smooth damp settings
     public float smoothDampTime = 0.15f;
@@ -32,9 +32,9 @@ public class CameraFollow : MonoBehaviour
 
         // Calculate upper and lower bounds
         float aboveBoundsHeight = aboveBounds.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
-        //float belowBoundsHeight = belowBounds.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+        float belowBoundsHeight = belowBounds.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
         levelMaxY = aboveBounds.position.y - aboveBoundsHeight - (camHeight / 2);
-        //levelMinY = belowBounds.position.y + belowBoundsHeight + (camHeight / 2);
+        levelMinY = belowBounds.position.y + belowBoundsHeight + (camHeight / 2);
     }
 
     // Update is called once per frame
