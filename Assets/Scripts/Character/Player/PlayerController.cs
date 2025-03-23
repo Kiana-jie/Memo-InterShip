@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             //优化：只需考虑player周围的地块？
             
-            Debug.Log(tesManager.tiles[pos].health -= status.digForce);
+            tesManager.tiles[pos].health -= status.digForce;
             tesManager.PlayDamageAnimation(pos);
             if (tesManager.tiles[pos].health <= 0)
             {

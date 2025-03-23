@@ -12,7 +12,7 @@ public class Consumable : Buyable
 {
     public ConsumableType consumableType;
 
-    public Consumable(ConsumableType consumableType)
+    public Consumable(ConsumableType consumableType, int buyPrice, BuyableType buyableType, int iD, string name, ItemType itemType, string description, string sprite) : base(buyPrice, buyableType,iD, name, itemType, description, sprite)
     {
         this.consumableType = consumableType;
     }

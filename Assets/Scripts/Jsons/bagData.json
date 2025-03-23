@@ -1,0 +1,14 @@
+[
+  {
+    "Id": 1,
+    "Name": "血包",
+    "ItemType": 0,
+    "Description": "把血回满",
+    "Sprite": "Sprites/Items/HealthBag",
+    "BuyableType": 0,
+    "BuyPrice": 500,
+    "ConsumableType": 0,
+    "HP": 100,
+    "OP": 0
+  }
+]

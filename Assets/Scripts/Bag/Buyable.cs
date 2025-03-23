@@ -11,7 +11,7 @@ public class Buyable : Item
 {
     public int BuyPrice { get; set; }
     public BuyableType buyableType { get; set; }
-    public Buyable(int buyPrice, BuyableType buyableType)
+    public Buyable(int buyPrice, BuyableType buyableType, int iD, string name, ItemType itemType, string description,  string sprite):base(iD, name, itemType, description, sprite)
     {
         BuyPrice = buyPrice;
         this.buyableType = buyableType;
