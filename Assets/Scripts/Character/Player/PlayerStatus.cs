@@ -9,6 +9,7 @@ public class PlayerStatus : MonoBehaviour
     public int maxOxygen;
     public int speed;
     public int digForce;
+    public float digCoolDown;
     public int defenceForce;
     public float flyForce;
     //public int maxSpeed;
@@ -16,8 +17,8 @@ public class PlayerStatus : MonoBehaviour
     private int curhealth;
     [SerializeField]
     private int curOxygen;
-
-    [Header("基本状态")]
+    public float lastDigTime = 0;
+    [Header("基本位置状态")]
     public bool isGrounded;
     public bool isLeftwalled;
     public bool isRightwalled;
@@ -47,7 +48,7 @@ public class PlayerStatus : MonoBehaviour
         {
             TakeDamage(20);
         }
-        if(isGrounded)
+        if(isGrounded )
         {
             canDig = true;
         }

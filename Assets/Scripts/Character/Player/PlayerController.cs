@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private PlayerStatus status;
     private Rigidbody2D rb;
     private PhysicCheck physicCheck;
-    
+    private TilesManagement tesManager;
 
     // Start is called before the first frame update
     private void Awake()
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         status = GetComponent<PlayerStatus>();
         physicCheck = GetComponent<PhysicCheck>();
+        tesManager = GameObject.Find("Layer-grounds").GetComponent<TilesManagement>();
 
         
     }
@@ -61,22 +62,33 @@ public class PlayerController : MonoBehaviour
     }
     public void HandleDig()
     {
+        //播放dig动画
         if (status.canDig == false) { return; }
+        if(Time.time - status.lastDigTime < status.digCoolDown) { return; }
         else
         {
+            
             Vector3Int tilePosition = physicCheck.GetTilePosition();
-            if (Input.GetKey(KeyCode.DownArrow)) { DigPostion(tilePosition+Vector3Int.down); }//向下挖
-            else if (status.isLeftwalled == true && Input.GetKey(KeyCode.LeftArrow)) { DigPostion(tilePosition+Vector3Int.left); }//向左挖
-            else if(status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) { DigPostion(tilePosition+Vector3Int.right); }//向右挖            
+            if (Input.GetKey(KeyCode.DownArrow)) { DigTile(tilePosition+Vector3Int.down); }//向下挖
+            else if (status.isLeftwalled == true && Input.GetKey(KeyCode.LeftArrow)) { DigTile(tilePosition+Vector3Int.left); }//向左挖
+            else if(status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) { DigTile(tilePosition+Vector3Int.right); }//向右挖            
         }
     }
 
-    public void DigPostion(Vector3Int pos)
+    public void DigTile(Vector3Int pos)
     {
         if (physicCheck.tilemap.HasTile(pos))
         {
-            physicCheck.tilemap.SetTile(pos, null); // 移除地块
-            physicCheck.UpdateTilemapCollider(); // 重新组合碰撞体
+            //优化：只需考虑player周围的地块？
+            
+            Debug.Log(tesManager.tiles[pos].health -= status.digForce);
+            tesManager.PlayDamageAnimation(pos);
+            if (tesManager.tiles[pos].health <= 0)
+            {
+                physicCheck.tilemap.SetTile(pos, null); // 移除地块
+            }
+            //physicCheck.UpdateTilemapCollider(); // 重新组合碰撞体
+            status.lastDigTime = Time.time;
         }
     }
 

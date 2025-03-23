@@ -17,13 +17,13 @@ public class PhysicCheck : MonoBehaviour
 
     public Tilemap tilemap; // 引用 Tilemap
     public TilemapCollider2D tilemapCollider;
-    private CompositeCollider2D compositeCollider;
+    //private CompositeCollider2D compositeCollider;
     // Start is called before the first frame update
     private void Awake()
     {
         tilemap = GameObject.Find("Layer-grounds").GetComponent<Tilemap>();
         tilemapCollider = tilemap.GetComponent<TilemapCollider2D>();
-        compositeCollider = tilemap.GetComponent<CompositeCollider2D>();
+        //compositeCollider = tilemap.GetComponent<CompositeCollider2D>();
         status = GetComponent<PlayerStatus>();
     }
     void Start()
@@ -57,11 +57,5 @@ public class PhysicCheck : MonoBehaviour
         return tilemap.WorldToCell(worldPos);
     }
 
-    public void UpdateTilemapCollider()
-    {
-        tilemapCollider.enabled = false; // 先禁用
-        //compositeCollider.enabled = false;
-        tilemapCollider.enabled = true;  // 再启用，让 CompositeCollider2D 重新组合
-        //compositeCollider.enabled = true;
-    }
+    
 }
