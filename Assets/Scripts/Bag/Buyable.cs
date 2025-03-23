@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum BuyableType
+{
+    Consumable,//消耗品
+    Equipment,//装备
+}
+public class Buyable : Item
+{
+    public int BuyPrice { get; set; }
+    public BuyableType buyableType { get; set; }
+    public Buyable(int buyPrice, BuyableType buyableType)
+    {
+        BuyPrice = buyPrice;
+        this.buyableType = buyableType;
+    }
+    public Buyable() { }
+}
