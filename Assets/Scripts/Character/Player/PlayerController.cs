@@ -30,6 +30,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleDig();
+        Test();
+    }
+
+    public void Test()
+    {
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+
+            int id = UnityEngine.Random.Range(1, 2);//通过生成装备id来表示生成装备
+            BackPack.Instance.StoreItem(id);
+
+        }
     }
 
 

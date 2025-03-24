@@ -21,6 +21,26 @@ public class InventoryManager : MonoBehaviour
         }
     }
     #endregion
+    #region 获取物品信息
+    /// <summary>
+    /// 通过 ID 获取物品
+    /// </summary>
+    /// <param name="id">物品的唯一 ID</param>
+    /// <returns>返回匹配的物品对象，如果未找到返回 null</returns>
+    public Item GetItemByID(int id)
+    {
+        foreach (Item item in itemList)
+        {
+            if (item != null && item.ID == id)
+            {
+                return item;
+            }
+        }
+        Debug.LogWarning("未找到 ID 为 " + id + " 的物品！");
+        return null;
+    }
+    #endregion
+
 
     #region 解析json
     //这里设计的大概思想就像，首先json文件是一个写好的装备信息,改json文件是一个[{},{}]，数组里面的类是继承自Item的，因此设定一个itemList集合
@@ -48,6 +68,7 @@ public class InventoryManager : MonoBehaviour
             string name = jsondata[i]["Name"].ToString();
             ItemType itemType = (ItemType)((int)jsondata[i]["ItemType"]);
             string description = jsondata[i]["Description"].ToString();
+            int capicity = (int)jsondata[i]["Capicity"];
             string sprite = jsondata[i]["Sprite"].ToString();
             switch (itemType)
             {
@@ -63,7 +84,7 @@ public class InventoryManager : MonoBehaviour
                                 case ConsumableType.RecoverWater:
                                     int HP = (int)jsondata[i]["HP"];
                                     int OP = (int)jsondata[i]["OP"];
-                                    itemtemp = new RecoverWater(HP,OP,consumableType,BuyPrice,buyableType,id,name,itemType,description,sprite);
+                                    itemtemp = new RecoverWater(HP,OP,consumableType,BuyPrice,buyableType,id,name,itemType,description,capicity, sprite);
                                     break;
                                 case ConsumableType.Bomb: 
                                     break;
