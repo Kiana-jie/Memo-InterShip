@@ -18,12 +18,18 @@ public class BackPack : Inventory
         }
     }
     #endregion
-
+    
+    
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
             SellAllSellableItems();
+        }
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+           ShowBackpackPanel();
         }
     }
 

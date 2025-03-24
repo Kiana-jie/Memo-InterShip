@@ -5,10 +5,17 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public List<Slot> slotList = new List<Slot>();
+    public CanvasGroup canvasGroup;
     // Start is called before the first frame update
     public virtual void Start()
     {
         slotList.AddRange(GetComponentsInChildren<Slot>());//可能有bug
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+        }
     }
 
     // Update is called once per frame
@@ -84,6 +91,17 @@ public class Inventory : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void ShowBackpackPanel()
+    {
+        if(canvasGroup != null)
+        {
+            bool isVisible = canvasGroup.alpha == 1;
+            canvasGroup.alpha = isVisible ? 0 : 1;  // 切换透明度
+            canvasGroup.interactable = !isVisible;  // 切换交互性
+
+        }
     }
 }
 
