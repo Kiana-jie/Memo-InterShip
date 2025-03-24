@@ -30,19 +30,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleDig();
-        Test();
+        Test1();
     }
 
-    public void Test()
+    public void Test1()
     {
         if(Input.GetKeyDown(KeyCode.G))
         {
 
-            int id = UnityEngine.Random.Range(1, 2);//通过生成装备id来表示生成装备
+            int id = UnityEngine.Random.Range(1, 4);//通过生成装备id来表示生成装备
             BackPack.Instance.StoreItem(id);
 
         }
     }
+
+    
 
 
     private void FixedUpdate()
@@ -94,9 +96,13 @@ public class PlayerController : MonoBehaviour
             //优化：只需考虑player周围的地块？
             
             tesManager.tiles[pos].health -= status.digForce;
-            tesManager.PlayDamageAnimation(pos);
+            //tesManager.PlayDamageAnimation(pos);
             if (tesManager.tiles[pos].health <= 0)
             {
+                if (tesManager.tiles[pos].isOre)//掉落矿物
+                {
+                    tesManager.SpawnDrop(pos, tesManager.tiles[pos].itemID);
+                }
                 physicCheck.tilemap.SetTile(pos, null); // 移除地块
             }
             //physicCheck.UpdateTilemapCollider(); // 重新组合碰撞体

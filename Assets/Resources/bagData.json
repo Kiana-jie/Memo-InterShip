@@ -4,12 +4,35 @@
     "Name": "health_pack",
     "ItemType": 0,
     "Description": "recover health",
-    "Capicity": 1,
+    "Capicity": 10,
     "Sprite": "Sprites/Items/Health_pack",
     "BuyableType": 0,
     "BuyPrice": 500,
     "ConsumableType": 0,
     "HP": 100,
     "OP": 0
+  },
+  {
+    "Id": 2,
+    "Name": "coal",
+    "ItemType": 1,
+    "Description": "这是一块煤炭",
+    "Capicity": 9999,
+    "Sprite": "Sprites/Items/Coal",
+    "SellPrice": 50
+  },
+  
+  {
+    "Id": 3,
+    "Name": "bomb",
+    "ItemType": 0,
+    "Description": "爆炸就是艺术！",
+    "Capicity": 10,
+    "Sprite": "Sprites/Items/Bomb",
+    "BuyableType": 0,
+    "BuyPrice": 100,
+    "ConsumableType": 1,
+    "Damage": 10
+
   }
 ]

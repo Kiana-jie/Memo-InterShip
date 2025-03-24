@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private List<Slot> slotList = new List<Slot>();
+    public List<Slot> slotList = new List<Slot>();
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+        Debug.Log(item.Name);
         return true;
     }
 

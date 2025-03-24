@@ -84,9 +84,11 @@ public class InventoryManager : MonoBehaviour
                                 case ConsumableType.RecoverWater:
                                     int HP = (int)jsondata[i]["HP"];
                                     int OP = (int)jsondata[i]["OP"];
-                                    itemtemp = new RecoverWater(HP,OP,consumableType,BuyPrice,buyableType,id,name,itemType,description,capicity, sprite);
+                                    itemtemp = new RecoverWater(HP, OP, consumableType, BuyPrice, buyableType, id, name, itemType, description, capicity, sprite);
                                     break;
-                                case ConsumableType.Bomb: 
+                                case ConsumableType.Bomb:
+                                    int damage = (int)jsondata[i]["Damage"];
+                                    itemtemp = new Bomb(damage, consumableType, BuyPrice, buyableType, id, name, itemType, description, capicity, sprite);
                                     break;
                                 case ConsumableType.FastMove:
                                     break;
@@ -97,6 +99,8 @@ public class InventoryManager : MonoBehaviour
                     }
                     break;
                 case ItemType.Sellable:
+                    int SellPrice = (int)jsondata[i]["SellPrice"];
+                    itemtemp = new Sellable(SellPrice,id,name,itemType,description,capicity,sprite);
                     break;
                 default:
                     break;

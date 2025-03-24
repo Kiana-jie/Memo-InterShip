@@ -7,13 +7,14 @@ public class TilesManagement : MonoBehaviour
     public TilemapCollider2D tilemapCollider;
     public Tilemap tilemap;
     public Dictionary<Vector3Int, TileData> tiles = new Dictionary<Vector3Int, TileData>();
+    public GameObject dropPrefab;
 
     private void Awake()
     {
         tilemap = GetComponent<Tilemap>();
         tilemapCollider = GetComponent<TilemapCollider2D>();
 
-        InitializeTileHealth();
+        InitializeTiles();
     }
     public void UpdateTilemapCollider()
     {
@@ -23,7 +24,7 @@ public class TilesManagement : MonoBehaviour
         //compositeCollider.enabled = true;
     }
 
-    public void InitializeTileHealth()
+    public void InitializeTiles()
     {
         BoundsInt bounds = tilemap.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
@@ -31,9 +32,22 @@ public class TilesManagement : MonoBehaviour
             TileBase tile = tilemap.GetTile(pos);
             if (tile != null)
             {
-                tiles[pos] = new TileData(tile, 8); // 设定默认血量为 8
+                
+                tiles[pos] = new TileData(tile, 8, false,-1); // 设定默认血量为 8,不为矿物，id为-1
+                if (tile.name.Contains("Coal"))
+                {
+                    tiles[pos].isOre = true;
+                    tiles[pos].itemID = 2;
+
+                }
             }
         }
+    }
+
+    public void SpawnDrop(Vector3Int pos,int itemID)
+    {
+        GameObject drop = Instantiate(dropPrefab,tilemap.CellToWorld(pos) + new Vector3(0.5f, 0.5f, 0), Quaternion.identity);
+        drop.GetComponent<DropItem>().Initialize(itemID);
     }
 
     public void PlayDamageAnimation(Vector3Int tilePos)

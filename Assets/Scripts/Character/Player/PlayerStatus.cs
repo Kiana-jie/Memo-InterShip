@@ -12,6 +12,7 @@ public class PlayerStatus : MonoBehaviour
     public float digCoolDown;
     public int defenceForce;
     public float flyForce;
+    public int money = 0;
     //public int maxSpeed;
     [SerializeField]
     private int curhealth;
@@ -25,6 +26,14 @@ public class PlayerStatus : MonoBehaviour
 
     //动作执行条件
     public bool canDig = false;
+
+    public static PlayerStatus Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -63,5 +72,11 @@ public class PlayerStatus : MonoBehaviour
     public void TakeDamage(int damage)
     {
         curhealth -= damage;
+    }
+
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        Debug.Log("当前金币：" + money);
     }
 }

@@ -23,16 +23,28 @@ public class ItemUI : MonoBehaviour
         this.Amount = amount;
         //更新UI
         itemImage.sprite = Resources.Load<Sprite>(item.Sprite);//根据item中的sprite加载Resources文件中的图片并赋值给当前slot中的item
-        /*if (item.Capicity > 1)//容量大于1才显示
+        if (item.Capicity > 1)//容量大于1才显示
             amountText.text = Amount.ToString();
         else
-            amountText.text = "";*/
+            amountText.text = "";
     }
     public void AddAmount(int amount = 1)
     {
         this.Amount += amount;
         //更新UI
         amountText.text = Amount.ToString();
+    }
+
+    public void ReduceAmount(int amount = 1)
+    {
+        this.Amount -= amount;
+        if(this.Amount <= 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        amountText.text = Amount.ToString();
+
     }
 
 }
