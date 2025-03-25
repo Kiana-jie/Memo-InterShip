@@ -96,13 +96,10 @@ public class PlayerController : MonoBehaviour
             //优化：只需考虑player周围的地块？
             
             tesManager.tiles[pos].health -= status.digForce;
-            //tesManager.PlayDamageAnimation(pos);
+            if (tesManager.tiles[pos].health == 7 && tesManager.tiles[pos].isOre) { tesManager.SpawnDrop(pos, tesManager.tiles[pos].itemID); }//掉落矿物
+            tesManager.PlayDamageAnimation(pos);
             if (tesManager.tiles[pos].health <= 0)
             {
-                if (tesManager.tiles[pos].isOre)//掉落矿物
-                {
-                    tesManager.SpawnDrop(pos, tesManager.tiles[pos].itemID);
-                }
                 physicCheck.tilemap.SetTile(pos, null); // 移除地块
             }
             //physicCheck.UpdateTilemapCollider(); // 重新组合碰撞体

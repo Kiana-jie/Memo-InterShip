@@ -33,8 +33,10 @@ public class Slot : MonoBehaviour
         }
     }
 
-    public int GetItemID() => transform.GetChild(0).GetComponent<ItemUI>().Item.ID;
-
+    public int GetItemID()=>  transform.GetChild(0).GetComponent<ItemUI>().Item.ID;
+        
+        
+    
     public bool IsFilled()
     {
         ItemUI itemUI = transform.GetChild(0).GetComponent<ItemUI>();
