@@ -10,6 +10,7 @@ public class BombScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(Damage);
         StartCoroutine(ExplodeAfterDelay(3f));
     }
 
@@ -21,22 +22,27 @@ public class BombScript : MonoBehaviour
 
     private void Explode()
     {
-       /* // 取得爆炸范围内的所有怪物（假设怪物有 `Monster` 标签）
-        Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
-        foreach (Collider collider in colliders)
+        //Debug.Log("start");
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius,LayerMask.GetMask("Monster"));
+        Debug.Log(colliders.Length);
+        foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("Monster"))
+            // 如果碰到怪物，则造成伤害
+            Monster monster = collider.GetComponent<Monster>();
+            if (monster != null)
             {
-                // 如果碰到怪物，则造成伤害
-                Monster monster = collider.GetComponent<Monster>();
-                if (monster != null)
-                {
-                    monster.TakeDamage(Damage);
-                    Debug.Log($"对怪物 {monster.name} 造成 {Damage} 点伤害");
-                }
+                monster.TakeDamage(Damage);
+                Debug.Log($"对怪物 {monster.name} 造成 {Damage} 点伤害");
             }
-        }*/
+            else Debug.Log("没有找到monster");
+        }
         Destroy(gameObject);
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
     }
 }

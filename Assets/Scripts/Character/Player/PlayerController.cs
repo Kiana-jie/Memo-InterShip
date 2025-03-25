@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     }
     public void HandleMovement()
     {
+        //移动动画
         if (Input.GetKey(KeyCode.LeftArrow)){
             transform.localScale = new Vector3(-1,1,1);
             rb.velocity = new Vector2(-status.speed , rb.velocity.y);
@@ -65,8 +66,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, 1, 1);
-            rb.velocity = new Vector2(status.speed , rb.velocity.y);//可能出bug的地方
-            
+            rb.velocity = new Vector2(status.speed , rb.velocity.y);
         }
 
     }
@@ -74,12 +74,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
+            //飞行动画
               rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);   
         }
     }
     public void HandleDig()
     {
-        //播放dig动画
+        //dig动画
         if (status.canDig == false) { return; }
         if(Time.time - status.lastDigTime < status.digCoolDown) { return; }
         else

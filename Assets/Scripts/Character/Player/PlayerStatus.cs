@@ -66,12 +66,16 @@ public class PlayerStatus : MonoBehaviour
 
     public void Die()
     {
+        //死亡动画
+        Destroy(gameObject);
 
     }
 
     public void TakeDamage(int damage)
     {
         curHealth -= damage;
+        if (curHealth < 0) { Die(); }
+        //受击动画
     }
 
     public void AddMoney(int amount)
@@ -85,6 +89,7 @@ public class PlayerStatus : MonoBehaviour
         curHealth += amount;
         if (curHealth > maxHealth) curHealth = maxHealth;
         Debug.Log($"恢复 {amount} 生命值，当前血量：{curHealth}");
+        //血量UI
     }
 
     public void RecoverOxygen(int amount)
@@ -92,5 +97,6 @@ public class PlayerStatus : MonoBehaviour
         curOxygen += amount;
         if(curOxygen > maxOxygen) curOxygen = maxOxygen;
         Debug.Log($"恢复 {amount} 氧气，当前氧气量：{curOxygen}");
+        //氧气UI
     }
 }
