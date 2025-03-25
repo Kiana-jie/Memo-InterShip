@@ -33,14 +33,14 @@ public class Slot : MonoBehaviour
         }
     }
 
-    public int GetItemID()=>  transform.GetChild(0).GetComponent<ItemUI>().Item.ID;
+    public int GetItemID() { /*Debug.Log(transform.GetChild(0).name);*/ return transform.GetChild(0).GetComponent<ItemUI>().Item.ID; }
         
-        
+    public int GetShopItemID() { return transform.GetChild(0).GetComponent<ShopItemUI>().itemID; }    
     
     public bool IsFilled()
     {
         ItemUI itemUI = transform.GetChild(0).GetComponent<ItemUI>();
-        return itemUI.Amount >= itemUI.Item.Capicity;
+        return itemUI.Amount >= itemUI.Item.Capicity;       
     }
 
     public void OnSlotClicked()

@@ -21,25 +21,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
     #endregion
-    #region 获取物品信息
-    /// <summary>
-    /// 通过 ID 获取物品
-    /// </summary>
-    /// <param name="id">物品的唯一 ID</param>
-    /// <returns>返回匹配的物品对象，如果未找到返回 null</returns>
-    public Item GetItemByID(int id)
-    {
-        foreach (Item item in itemList)
-        {
-            if (item != null && item.ID == id)
-            {
-                return item;
-            }
-        }
-        Debug.LogWarning("未找到 ID 为 " + id + " 的物品！");
-        return null;
-    }
-    #endregion
+    
 
 
     #region 解析json
@@ -107,8 +89,28 @@ public class InventoryManager : MonoBehaviour
             }
             itemList.Add(itemtemp);
         }
-        RecoverWater test = (RecoverWater)itemList[0];
-        Debug.Log(test.HP + "+" + test.OP);
+        //RecoverWater test = (RecoverWater)itemList[0];
+        //Debug.Log(test.HP + "+" + test.OP);
+    }
+    #endregion
+
+    #region 获取物品信息
+    /// <summary>
+    /// 通过 ID 获取物品
+    /// </summary>
+    /// <param name="id">物品的唯一 ID</param>
+    /// <returns>返回匹配的物品对象，如果未找到返回 null</returns>
+    public Item GetItemByID(int id)
+    {
+        foreach (Item item in itemList)
+        {
+            if (item != null && item.ID == id)
+            {
+                return item;
+            }
+        }
+        Debug.LogWarning("未找到 ID 为 " + id + " 的物品！");
+        return null;
     }
     #endregion
 }

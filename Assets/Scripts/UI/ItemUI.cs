@@ -20,6 +20,10 @@ public class ItemUI : MonoBehaviour
     public void SetItem(Item item, int amount = 1)//用参数item设置itemUI中的item
     {
         this.Item = item;
+        if (this.Item == null)
+        {
+            Debug.LogError("传入的 Item 为 null");
+        }
         this.Amount = amount;
         //更新UI
         itemImage.sprite = Resources.Load<Sprite>(item.Sprite);//根据item中的sprite加载Resources文件中的图片并赋值给当前slot中的item

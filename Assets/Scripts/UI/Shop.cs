@@ -37,9 +37,9 @@ public class Shop : Inventory
     {
         if (selectedSlot != null)
         {
-            int itemId = selectedSlot.GetItemID();  // 使用 GetItemID 获取物品 ID
+            int itemId = selectedSlot.GetShopItemID();  // 使用 GetItemID 获取物品 ID
             Item item = InventoryManager.Instance.GetItemByID(itemId);  // 获取物品
-
+            
             if (item != null && item is Buyable buyableItem)
             {
                 BuyItem(buyableItem.ID);  // 调用购买物品的逻辑
@@ -85,7 +85,8 @@ public class Shop : Inventory
         {
             // 购买物品
             PlayerStatus.Instance.AddMoney(-buyableItem.BuyPrice);  // 扣除金币
-            StoreItem(itemID);  // 把物品存入背包
+            //Debug.Log(StoreItem(itemID));  // 把物品存入背包
+            BackPack.Instance.StoreItem(itemID);
             Debug.Log($"成功购买 {item.Name}，花费 {buyableItem.BuyPrice} 金币");
             return true;
         }

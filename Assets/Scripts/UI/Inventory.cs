@@ -65,7 +65,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        Debug.Log(item.Name);
+        //Debug.Log(item.Name);
         return true;
     }
 
