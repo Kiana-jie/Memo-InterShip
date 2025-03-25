@@ -30,8 +30,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleDig();
-        Test1();
+        //Test1();
+        HandleUseItems();
     }
+
+    
 
     public void Test1()
     {
@@ -88,6 +91,11 @@ public class PlayerController : MonoBehaviour
             else if(status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) { DigTile(tilePosition+Vector3Int.right); }//œÚ”“Õ⁄            
         }
     }
+    public void HandleUseItems()
+    {
+        if(Input.GetKeyDown(KeyCode.Q)) { BackPack.Instance.UseItem(1); }
+        if(Input.GetKeyDown(KeyCode.W)) { BackPack.Instance.UseItem(3); }
+    }
 
     public void DigTile(Vector3Int pos)
     {
@@ -106,6 +114,9 @@ public class PlayerController : MonoBehaviour
             status.lastDigTime = Time.time;
         }
     }
+
+
+    
 
 
 

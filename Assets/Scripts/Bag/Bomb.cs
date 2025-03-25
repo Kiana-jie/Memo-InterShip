@@ -9,4 +9,24 @@ public class Bomb : Consumable
     {
         Damage = damage;
     }
+
+    public override void Consume()
+    {
+        GameObject bombPrefab = Resources.Load<GameObject>("Prefabs/Items/Bomb");
+        if (bombPrefab != null)
+        {
+            GameObject bomb = GameObject.Instantiate(bombPrefab, PlayerStatus.Instance.transform.position, Quaternion.identity);
+            // …Ë÷√’®µØµƒ’®µØΩ≈±æ
+            BombScript bombScript = bomb.GetComponent<BombScript>();
+            if (bombScript != null)
+            {
+                bombScript.Damage = this.Damage;
+                
+            }
+        }
+        else
+        {
+            Debug.LogError("’®µØ‘§÷∆ÃÂŒ¥’“µΩ£°");
+        }
+    }
 }

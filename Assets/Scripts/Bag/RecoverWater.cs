@@ -12,5 +12,8 @@ public class RecoverWater : Consumable
         this.HP = HP;
         this.OP = OP;
     }
-
+    public override void Consume()
+    {
+        PlayerStatus.Instance.RecoverHealth(HP);
+    }
 }

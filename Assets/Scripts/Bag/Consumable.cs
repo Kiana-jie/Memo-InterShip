@@ -8,7 +8,7 @@ public enum ConsumableType
     Bomb,
     FastMove
 }
-public class Consumable : Buyable
+public abstract class Consumable : Buyable
 {
     public ConsumableType consumableType;
 
@@ -17,4 +17,5 @@ public class Consumable : Buyable
         this.consumableType = consumableType;
     }
     public Consumable() { }
+    public abstract void Consume();
 }

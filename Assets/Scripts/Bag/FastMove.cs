@@ -11,4 +11,9 @@ public class FastMove : Consumable
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
+
+    public override void Consume()
+    {
+        
+    }
 }

@@ -69,6 +69,8 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    
+
     private Slot FindEmptySlot()
     {
         foreach(Slot slot in slotList)

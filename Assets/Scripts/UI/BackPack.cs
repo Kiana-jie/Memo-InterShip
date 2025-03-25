@@ -63,4 +63,30 @@ public class BackPack : Inventory
             Debug.Log("背包中没有可出售的矿物");
         }
     }
+    public bool UseItem(int itemId)
+    {
+        // 查找玩家背包中是否有该道具
+        Slot slot = slotList.Find(s => s.GetItemID() == itemId);
+        if (slot != null)
+        {
+            ItemUI itemUI = slot.transform.GetChild(0).GetComponent<ItemUI>();
+            Item item = itemUI.Item;
+            if (item is Consumable ConsumableItem)
+            {
+                // 执行道具的使用逻辑
+                ConsumableItem.Consume();
+                itemUI.ReduceAmount(); // 移除物品
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("该物品不能使用！");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("未找到该道具！");
+        }
+        return false;
+    }
 }

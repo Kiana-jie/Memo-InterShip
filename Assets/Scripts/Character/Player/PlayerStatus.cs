@@ -12,10 +12,10 @@ public class PlayerStatus : MonoBehaviour
     public float digCoolDown;
     public int defenceForce;
     public float flyForce;
-    public int money = 0;
+    public int money = 1000;
     //public int maxSpeed;
     [SerializeField]
-    private int curhealth;
+    private int curHealth;
     [SerializeField]
     private int curOxygen;
     public float lastDigTime = 0;
@@ -38,7 +38,7 @@ public class PlayerStatus : MonoBehaviour
     void Start()
     {
         flyForce = speed * 0.2f;
-        curhealth = maxHealth; curOxygen = maxOxygen;
+        curHealth = maxHealth; curOxygen = maxOxygen;
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void CheckCondition()
     {
-        if(curhealth <= 0)
+        if(curHealth <= 0)
         {
             Die();
         }
@@ -71,12 +71,26 @@ public class PlayerStatus : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        curhealth -= damage;
+        curHealth -= damage;
     }
 
     public void AddMoney(int amount)
     {
         money += amount;
         Debug.Log("当前金币：" + money);
+    }
+
+    public void RecoverHealth(int amount)
+    {
+        curHealth += amount;
+        if (curHealth > maxHealth) curHealth = maxHealth;
+        Debug.Log($"恢复 {amount} 生命值，当前血量：{curHealth}");
+    }
+
+    public void RecoverOxygen(int amount)
+    {
+        curOxygen += amount;
+        if(curOxygen > maxOxygen) curOxygen = maxOxygen;
+        Debug.Log($"恢复 {amount} 氧气，当前氧气量：{curOxygen}");
     }
 }
