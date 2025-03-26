@@ -27,6 +27,11 @@ public class Monster : MonoBehaviour
         Move();
     }
 
+    private void Update()
+    {
+        Attack();
+    }
+
     private void Move()
     {
         CheckDir(); // 检查是否需要改变方向
@@ -53,8 +58,12 @@ public class Monster : MonoBehaviour
    public void Attack()
    {
         Collider2D collider = Physics2D.OverlapCircle(transform.position, attackRange, LayerMask.GetMask("Player"));
-        collider.GetComponent<PlayerStatus>().TakeDamage(damage);
-        Debug.Log($"玩家受到了{damage}的伤害");
+        //Debug.Log(collider);
+        if (collider != null) {
+            collider.GetComponent<PlayerStatus>().TakeDamage(damage);
+            Debug.Log($"玩家受到了{damage}的伤害");
+        }
+        
    }
 
     // 使怪物进入无敌状态

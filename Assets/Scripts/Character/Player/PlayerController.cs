@@ -23,17 +23,18 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         
     }
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
-        HandleDig();
-        //Test1();
-        HandleUseItems();
+        if (status.canInput)
+        {
+            HandleDig();
+            //Test1();
+            HandleUseItems();
+        }
+        
     }
 
     
@@ -54,8 +55,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
-        HandleFly();
+        if(status.canInput)
+        {
+            HandleMovement();
+            HandleFly();
+        }
         //SpeedLimit();
     }
     public void HandleMovement()
@@ -83,11 +87,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //·ÉÐÐ¶¯»­
+            rb.gravityScale = 0.5f;
             rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);
             anim.SetBool("isFlying", true);
         }
-        else anim.SetBool("isFlying", false);
-        
+        else
+        {
+            rb.gravityScale = 1f;
+            anim.SetBool("isFlying", false);
+        }
 
     }
     public void HandleDig()
