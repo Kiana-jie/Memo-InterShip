@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private PhysicCheck physicCheck;
     private TilesManagement tesManager;
+    private Animator anim;
+    
 
     // Start is called before the first frame update
     private void Awake()
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         physicCheck = GetComponent<PhysicCheck>();
         tesManager = GameObject.Find("Layer-grounds").GetComponent<TilesManagement>();
-
+        anim = GetComponent<Animator>();
         
     }
     void Start()
@@ -58,16 +60,22 @@ public class PlayerController : MonoBehaviour
     }
     public void HandleMovement()
     {
+
         //移动动画
-        if (Input.GetKey(KeyCode.LeftArrow)){
-            transform.localScale = new Vector3(-1,1,1);
-            rb.velocity = new Vector2(-status.speed , rb.velocity.y);
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            rb.velocity = new Vector2(-status.speed, rb.velocity.y);
+            anim.SetBool("isWalking", true);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, 1, 1);
-            rb.velocity = new Vector2(status.speed , rb.velocity.y);
+            rb.velocity = new Vector2(status.speed, rb.velocity.y);
+            anim.SetBool("isWalking", true);
         }
+        else anim.SetBool("isWalking", false);
+        
 
     }
     public void HandleFly()
@@ -75,21 +83,45 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //飞行动画
-              rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);   
+            rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);
+            anim.SetBool("isFlying", true);
         }
+        else anim.SetBool("isFlying", false);
+        
+
     }
     public void HandleDig()
     {
         //dig动画
-        if (status.canDig == false) { return; }
+        if (status.canDig == false) { anim.SetBool("isDigingGround", false); return; }
+            
         if(Time.time - status.lastDigTime < status.digCoolDown) { return; }
         else
         {
             
             Vector3Int tilePosition = physicCheck.GetTilePosition();
-            if (Input.GetKey(KeyCode.DownArrow)) { DigTile(tilePosition+Vector3Int.down); }//向下挖
-            else if (status.isLeftwalled == true && Input.GetKey(KeyCode.LeftArrow)) { DigTile(tilePosition+Vector3Int.left); }//向左挖
-            else if(status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) { DigTile(tilePosition+Vector3Int.right); }//向右挖            
+            if (Input.GetKey(KeyCode.DownArrow)) {
+                DigTile(tilePosition + Vector3Int.down); 
+                anim.SetBool("isDigingGround", true);
+                anim.SetBool("isDigingWall", false);
+            }//向下挖
+            else if (status.isLeftwalled == true && Input.GetKey(KeyCode.LeftArrow)) {
+                DigTile(tilePosition + Vector3Int.left);
+                anim.SetBool("isDigingWall", true);
+                anim.SetBool("isDigGround", false);
+            }//向左挖
+            else if (status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) {
+                DigTile(tilePosition + Vector3Int.right);
+                anim.SetBool("isDigingWall", true);
+                anim.SetBool("isDigGround", false);
+            }//向右挖
+            else
+            {
+                anim.SetBool("isDigingGround", false);
+                anim.SetBool("isDigingWall", false);
+            }
+            
+                                                                                                                                                               
         }
     }
     public void HandleUseItems()

@@ -44,12 +44,12 @@ TagManager:
   - name: Ground
     uniqueID: 2237810895
     locked: 0
+  - name: Monster
+    uniqueID: 964170973
+    locked: 0
   - name: Player
     uniqueID: 3922214229
     locked: 0
   - name: Item
     uniqueID: 1824873789
-    locked: 0
-  - name: Monster
-    uniqueID: 964170973
     locked: 0
