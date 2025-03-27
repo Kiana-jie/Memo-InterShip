@@ -72,7 +72,7 @@ public class PlayerStatus : MonoBehaviour
         }
         if (curOxygen <= 0)
         {
-            TakeDamage(20);
+            TakeDamage(20);//此处应无僵直
             UpdateBarUI();
         }
         if (isGrounded)
@@ -93,7 +93,11 @@ public class PlayerStatus : MonoBehaviour
     public void Die()
     {
         //死亡动画
-        Destroy(gameObject);
+        anim.SetBool("isDie", true);
+        canInput = false;
+        StartCoroutine(DieDown());
+        
+
 
     }
 
@@ -105,10 +109,10 @@ public class PlayerStatus : MonoBehaviour
             //受击动画
             invulnerable = true;
             UpdateBarUI();
+            if (curHealth < 0) { Die(); return; }
             anim.SetBool("isAttacked", true);
             Debug.Log("attacked!");
             StartCoroutine(InputCoolDown(1f));
-            if (curHealth < 0) { Die(); }
            
             StartCoroutine(InvulnerabilityTimer());
 
@@ -159,6 +163,12 @@ public class PlayerStatus : MonoBehaviour
         
         yield return new WaitForSeconds(invulnerableDuration);
         invulnerable = false;
+    }
+    private IEnumerator DieDown()
+    {
+        yield return new WaitForSeconds(2f);
+        //唤醒死亡后面板UI
+        Destroy(gameObject);
     }
 
 }

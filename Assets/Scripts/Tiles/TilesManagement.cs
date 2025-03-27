@@ -33,7 +33,7 @@ public class TilesManagement : MonoBehaviour
             if (tile != null)
             {
                 
-                tiles[pos] = new TileData(tile, 8, false,-1); // 设定默认血量为 8,不为矿物，id为-1
+                tiles[pos] = new TileData(tile, 8, false, -1); // 设定默认血量为 8,不为矿物，id为-1
                 if (tile.name.Contains("Coal"))
                 {
                     tiles[pos].isOre = true;
