@@ -16,7 +16,7 @@ public class PlayerStatus : MonoBehaviour
     public float invulnerableDuration = 1f;
     
     public bool invulnerable;
-    public int money = 1000;
+    public int money = 0;
     //public int maxSpeed;
     [SerializeField]
     private int curHealth;
@@ -32,6 +32,7 @@ public class PlayerStatus : MonoBehaviour
     public Image healthBar;
     public Image OxygenBar;
     private Animator anim;
+    private float lastOxygenTime;
 
     //动作执行条件
     public bool canInput = true;
@@ -59,11 +60,16 @@ public class PlayerStatus : MonoBehaviour
     public void CheckCondition()
     {
 
-        if(curHealth <= 0)
+        if (curHealth <= 0)
         {
             Die();
         }
-        if(curOxygen <= 0)
+        if(transform.position.y < -5)
+        {
+            StartCoroutine(OxCoolDown());
+            
+        }
+        if (curOxygen <= 0)
         {
             TakeDamage(20);
             UpdateBarUI();
@@ -77,7 +83,12 @@ public class PlayerStatus : MonoBehaviour
             canDig = false;
         }
     }
-    
+    private IEnumerator OxCoolDown()
+    {
+        yield return new WaitForSeconds(1f);
+        curOxygen -= 5;
+        
+    }
     public void Die()
     {
         //死亡动画
@@ -91,7 +102,7 @@ public class PlayerStatus : MonoBehaviour
         {
             curHealth -= damage;
             //受击动画
-            //anim.SetBool("isAttacked", true);
+            anim.SetBool("isAttacked", true);
             invulnerable = true;
             StartCoroutine(InputCoolDown(1f));
             UpdateBarUI();
@@ -137,9 +148,9 @@ public class PlayerStatus : MonoBehaviour
     private IEnumerator InputCoolDown(float t)
     {
         canInput = false;
-        yield return new WaitForSecondsRealtime(t);
-        anim.SetBool("isAttacked", false);
+        yield return new WaitForSeconds(t);
         canInput = true;
+        anim.SetBool("isAttacked", false);
     }
     private IEnumerator InvulnerabilityTimer()
     {
