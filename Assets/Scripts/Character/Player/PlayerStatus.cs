@@ -49,6 +49,7 @@ public class PlayerStatus : MonoBehaviour
     {
         flyForce = speed * 0.2f;
         curHealth = maxHealth; curOxygen = maxOxygen;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -102,10 +103,11 @@ public class PlayerStatus : MonoBehaviour
         {
             curHealth -= damage;
             //Κά»χ¶―»­
-            anim.SetBool("isAttacked", true);
             invulnerable = true;
-            StartCoroutine(InputCoolDown(1f));
             UpdateBarUI();
+            anim.SetBool("isAttacked", true);
+            Debug.Log("attacked!");
+            StartCoroutine(InputCoolDown(1f));
             if (curHealth < 0) { Die(); }
            
             StartCoroutine(InvulnerabilityTimer());

@@ -61,7 +61,7 @@ public class Monster : MonoBehaviour
         //Debug.Log(collider);
         if (collider != null) {
             collider.GetComponent<PlayerStatus>().TakeDamage(damage);
-            Debug.Log($"玩家受到了{damage}的伤害");
+            //Debug.Log($"玩家受到了{damage}的伤害");
         }
         
    }
