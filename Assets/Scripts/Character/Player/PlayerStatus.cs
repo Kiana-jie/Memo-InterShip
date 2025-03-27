@@ -7,7 +7,7 @@ public class PlayerStatus : MonoBehaviour
 {
     [Header("基本属性")]
     public int maxHealth;
-    public int maxOxygen;
+    public float maxOxygen;
     public int speed;
     public int digForce;
     public float digCoolDown;
@@ -21,7 +21,7 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField]
     private int curHealth;
     [SerializeField]
-    private int curOxygen;
+    private float curOxygen;
     
     public float lastDigTime = 0;
     [Header("基本位置状态")]
@@ -32,8 +32,9 @@ public class PlayerStatus : MonoBehaviour
     public Image healthBar;
     public Image OxygenBar;
     private Animator anim;
-    private float lastOxygenTime;
-
+    private bool isOxygenDecreasing = false;
+    private bool isHurting = false;
+    private Rigidbody2D rb;
     //动作执行条件
     public bool canInput = true;
     public bool canDig = false;
@@ -43,6 +44,7 @@ public class PlayerStatus : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+        rb = GetComponent<Rigidbody2D>();
     }
     // Start is called before the first frame update
     void Start()
@@ -65,15 +67,15 @@ public class PlayerStatus : MonoBehaviour
         {
             Die();
         }
-        if(transform.position.y < -5)
+        if(transform.position.y < -5 && !isOxygenDecreasing && curOxygen > 0)
         {
-            StartCoroutine(OxCoolDown());
+            StartCoroutine(DecreaseOxygen());
             
         }
-        if (curOxygen <= 0)
+        if (curOxygen <= 0 && !isHurting && transform.position.y < -5)
         {
-            TakeDamage(20);//此处应无僵直
-            UpdateBarUI();
+            StartCoroutine(takeOxyHurt());//此处应无僵直
+            
         }
         if (isGrounded)
         {
@@ -83,12 +85,34 @@ public class PlayerStatus : MonoBehaviour
         {
             canDig = false;
         }
+        CheckFallDamage();
     }
-    private IEnumerator OxCoolDown()
+
+    public void CheckFallDamage()
     {
+        if (isGrounded && rb.velocity.y <= -10) // 速度低于阈值且落地
+        {
+            TakeDamage(20);
+            
+        }
+    }
+    private IEnumerator DecreaseOxygen()
+    {
+        isOxygenDecreasing = true;
         yield return new WaitForSeconds(1f);
-        curOxygen -= 5;
-        
+        curOxygen -= 0.5f;
+        UpdateBarUI();
+        isOxygenDecreasing = false;
+
+    }
+
+    private IEnumerator takeOxyHurt()
+    {
+        isHurting = true;
+        yield return new WaitForSeconds(1f);
+        curHealth -= 5;
+        UpdateBarUI();
+        isHurting = false;
     }
     public void Die()
     {
@@ -100,6 +124,10 @@ public class PlayerStatus : MonoBehaviour
 
 
     }
+    
+
+    
+
 
     public void TakeDamage(int damage)
     {
