@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private PhysicCheck physicCheck;
     private TilesManagement tesManager;
     private Animator anim;
+    private CameraShake cameraShake;
     
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
         physicCheck = GetComponent<PhysicCheck>();
         tesManager = GameObject.Find("Layer-grounds").GetComponent<TilesManagement>();
         anim = GetComponent<Animator>();
+        cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         
     }
     
@@ -109,16 +111,19 @@ public class PlayerController : MonoBehaviour
             
             Vector3Int tilePosition = physicCheck.GetTilePosition();
             if (Input.GetKey(KeyCode.DownArrow)) {
+                cameraShake.StartShake();
                 DigTile(tilePosition + Vector3Int.down); 
                 anim.SetBool("isDigingGround", true);
                 anim.SetBool("isDigingWall", false);
             }//ÏòÏÂÍÚ
             else if (status.isLeftwalled == true && Input.GetKey(KeyCode.LeftArrow)) {
+                cameraShake.StartShake();
                 DigTile(tilePosition + Vector3Int.left);
                 anim.SetBool("isDigingWall", true);
                 anim.SetBool("isDigGround", false);
             }//Ïò×óÍÚ
             else if (status.isRightwalled == true && Input.GetKey(KeyCode.RightArrow)) {
+                cameraShake.StartShake();
                 DigTile(tilePosition + Vector3Int.right);
                 anim.SetBool("isDigingWall", true);
                 anim.SetBool("isDigGround", false);

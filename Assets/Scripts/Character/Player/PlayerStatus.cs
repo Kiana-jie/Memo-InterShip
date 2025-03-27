@@ -67,6 +67,10 @@ public class PlayerStatus : MonoBehaviour
         {
             Die();
         }
+        if(transform.position.y >= -5) 
+        {
+            curOxygen = maxOxygen;
+        }
         if(transform.position.y < -5 && !isOxygenDecreasing && curOxygen > 0)
         {
             StartCoroutine(DecreaseOxygen());
