@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BackPack : Inventory
 {
+    public TextMeshProUGUI moneyText;
     #region 单例模式
     private static BackPack _instance;
     public static BackPack Instance
@@ -23,10 +25,10 @@ public class BackPack : Inventory
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.F))
         {
             SellAllSellableItems();
-        }
+        }*/
         if(Input.GetKeyDown(KeyCode.B))
         {
            ShowBackpackPanel();
@@ -56,12 +58,18 @@ public class BackPack : Inventory
         if (totalEarnings > 0)
         {
             PlayerStatus.Instance.AddMoney(totalEarnings);
+            UpdateMoneyUI();
             Debug.Log($"成功卖出矿物，获得金币: {totalEarnings}");
         }
         else
         {
             Debug.Log("背包中没有可出售的矿物");
         }
+    }
+    public void UpdateMoneyUI()
+    {
+        int money = PlayerStatus.Instance.money;
+        moneyText.text = $"{money}";
     }
     public bool UseItem(int itemId)
     {
@@ -85,6 +93,7 @@ public class BackPack : Inventory
         }
         else
         {
+            AudioManager.Instance.Play("error", gameObject);
             Debug.LogWarning("未找到该道具！");
         }
         return false;

@@ -43,7 +43,7 @@
     "Capicity": 10,
     "Sprite": "Sprites/Items/Oxygen_pack",
     "BuyableType": 0,
-    "BuyPrice": 500,
+    "BuyPrice": 1000,
     "ConsumableType": 0,
     "HP": 0,
     "OP": 100
@@ -57,7 +57,7 @@
     "Capicity": 10,
     "Sprite": "Sprites/Items/FastMove",
     "BuyableType": 0,
-    "BuyPrice": 500,
+    "BuyPrice": 1000,
     "ConsumableType": 2
   }
 

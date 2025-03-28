@@ -44,6 +44,9 @@ TagManager:
   - name: Ground
     uniqueID: 2237810895
     locked: 0
+  - name: Scene
+    uniqueID: 473343345
+    locked: 0
   - name: Monster
     uniqueID: 964170973
     locked: 0

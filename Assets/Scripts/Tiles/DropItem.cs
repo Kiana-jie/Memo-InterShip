@@ -31,6 +31,7 @@ public class DropItem : MonoBehaviour
             //Debug.Log()
             if (success)
             {
+                AudioManager.Instance.Play("pickUp", gameObject);
                 //游戏内弹出tip:矿石的金钱:
                 ShowItemInfo(itemID);
                 Destroy(gameObject); // 成功拾取后销毁掉落物

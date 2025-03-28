@@ -22,6 +22,7 @@ public class BombScript : MonoBehaviour
 
     private void Explode()
     {
+        AudioManager.Instance.Play("bomb", gameObject);
         //Debug.Log("start");
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius,LayerMask.GetMask("Monster"));
         Debug.Log(colliders.Length);

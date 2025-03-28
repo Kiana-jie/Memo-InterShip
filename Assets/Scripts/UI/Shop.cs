@@ -53,10 +53,7 @@ public class Shop : Inventory
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S)) // 按下 S 键显示/隐藏商店面板
-        {
-            ShowShopPanel();
-        }
+        
     }
 
     // 商店界面显示与隐藏
@@ -67,6 +64,17 @@ public class Shop : Inventory
             bool isVisible = canvasGroup.alpha == 1;
             canvasGroup.alpha = isVisible ? 0 : 1;  // 切换透明度
             canvasGroup.interactable = !isVisible;  // 切换交互性
+            if (!isVisible) {
+                AudioManager.Instance.Play("invenOpen", gameObject);
+                AudioManager.Instance.Stop("normalBgm", gameObject);
+                AudioManager.Instance.Play("shopBgm", gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("invenClose", gameObject);
+                AudioManager.Instance.Play("normalBgm", gameObject);
+                AudioManager.Instance.Stop("shopBgm", gameObject);
+            }
         }
     }
     public bool BuyItem(int itemID)
@@ -87,11 +95,13 @@ public class Shop : Inventory
             PlayerStatus.Instance.AddMoney(-buyableItem.BuyPrice);  // 扣除金币
             //Debug.Log(StoreItem(itemID));  // 把物品存入背包
             BackPack.Instance.StoreItem(itemID);
+            AudioManager.Instance.Play("buy", gameObject);
             Debug.Log($"成功购买 {item.Name}，花费 {buyableItem.BuyPrice} 金币");
             return true;
         }
         else
         {
+            AudioManager.Instance.Play("error", gameObject);
             Debug.LogWarning("金币不足，无法购买该物品");
             return false;
         }

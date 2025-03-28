@@ -97,9 +97,19 @@ public class Inventory : MonoBehaviour
     {
         if(canvasGroup != null)
         {
+
             bool isVisible = canvasGroup.alpha == 1;
             canvasGroup.alpha = isVisible ? 0 : 1;  // 切换透明度
             canvasGroup.interactable = !isVisible;  // 切换交互性
+            if(!isVisible )
+            {
+                AudioManager.Instance.Play("invenOpen", gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.Play("invenClose", gameObject);
+                
+            }
 
         }
     }

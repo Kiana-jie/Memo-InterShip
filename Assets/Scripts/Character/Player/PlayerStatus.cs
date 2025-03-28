@@ -73,7 +73,8 @@ public class PlayerStatus : MonoBehaviour
         }
         if(transform.position.y >= -5) 
         {
-            curOxygen = maxOxygen;
+            curOxygen = Mathf.Min(curOxygen += 1, maxOxygen);
+            UpdateBarUI();
         }
         if(transform.position.y < -5 && !isOxygenDecreasing && curOxygen > 0)
         {
@@ -87,7 +88,7 @@ public class PlayerStatus : MonoBehaviour
         }
         if (isGrounded  || isFlying)
         {
-            canDig = true;
+            if(!isFlying)   canDig = true;
             rb.gravityScale = 1f;
         }
         
@@ -100,6 +101,25 @@ public class PlayerStatus : MonoBehaviour
         CheckFallDamage();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "ShopPlace")
+        {
+            
+            Shop.Instance.ShowShopPanel();
+            BackPack.Instance.ShowBackpackPanel();
+            //canInput = false;
+        }
+    }
+    /*private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "ShopPlace")
+        {
+            //canInput = true;
+            BackPack.Instance.ShowBackpackPanel();
+            Shop.Instance.ShowShopPanel();
+        }
+    }*/
     public void CheckFallDamage()
     {
         if (isGrounded && rb.velocity.y <= -15) // 速度低于阈值且落地
@@ -120,6 +140,7 @@ public class PlayerStatus : MonoBehaviour
 
     private IEnumerator takeOxyHurt()
     {
+        AudioManager.Instance.Play("die", gameObject);
         isHurting = true;
         yield return new WaitForSeconds(1f);
         curHealth -= 5;
@@ -129,6 +150,7 @@ public class PlayerStatus : MonoBehaviour
     public void Die()
     {
         //死亡动画
+        AudioManager.Instance.Play("gameOver", gameObject);
         anim.SetBool("isDie", true);
         canInput = false;
         StartCoroutine(DieDown());
@@ -147,6 +169,7 @@ public class PlayerStatus : MonoBehaviour
         {
             curHealth -= damage;
             //受击动画
+            AudioManager.Instance.Play("die", gameObject);
             invulnerable = true;
             UpdateBarUI();
             if (curHealth < 0) { Die(); return; }
@@ -163,6 +186,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void AddMoney(int amount)
     {
+        AudioManager.Instance.Play("sell", gameObject);
         money += amount;
         Debug.Log("当前金币：" + money);
     }
