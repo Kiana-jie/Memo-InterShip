@@ -92,11 +92,12 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0.5f;
             rb.AddForce(Vector3.up * status.flyForce, ForceMode2D.Impulse);
             anim.SetBool("isFlying", true);
+            status.isFlying = true;
         }
         else
         {
-            rb.gravityScale = 1f;
             anim.SetBool("isFlying", false);
+            status.isFlying = false;
         }
 
     }
@@ -141,6 +142,8 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q)) { BackPack.Instance.UseItem(1); }
         if(Input.GetKeyDown(KeyCode.W)) { BackPack.Instance.UseItem(3); }
+        if(Input.GetKeyDown(KeyCode.E)) { BackPack.Instance.UseItem(4); }
+        if(Input.GetKeyDown(KeyCode.R)) { BackPack.Instance.UseItem(5); }
     }
 
     public void DigTile(Vector3Int pos)

@@ -29,6 +29,9 @@ public class PlayerStatus : MonoBehaviour
     public bool isLeftwalled;
     public bool isRightwalled;
 
+    [Header("人物物理状态")]
+    public bool isFlying;
+
     public Image healthBar;
     public Image OxygenBar;
     private Animator anim;
@@ -40,6 +43,7 @@ public class PlayerStatus : MonoBehaviour
     public bool canDig = false;
     public static PlayerStatus Instance { get; private set; }
 
+    
     private void Awake()
     {
         if (Instance == null)
@@ -49,7 +53,7 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        flyForce = speed * 0.2f;
+        flyForce = speed * 0.1f;
         curHealth = maxHealth; curOxygen = maxOxygen;
         anim = GetComponent<Animator>();
     }
@@ -81,20 +85,24 @@ public class PlayerStatus : MonoBehaviour
             StartCoroutine(takeOxyHurt());//此处应无僵直
             
         }
-        if (isGrounded)
+        if (isGrounded  || isFlying)
         {
             canDig = true;
+            rb.gravityScale = 1f;
         }
-        else
+        
+        else 
         {
             canDig = false;
+            rb.gravityScale = 2f;
         }
+        
         CheckFallDamage();
     }
 
     public void CheckFallDamage()
     {
-        if (isGrounded && rb.velocity.y <= -10) // 速度低于阈值且落地
+        if (isGrounded && rb.velocity.y <= -15) // 速度低于阈值且落地
         {
             TakeDamage(20);
             

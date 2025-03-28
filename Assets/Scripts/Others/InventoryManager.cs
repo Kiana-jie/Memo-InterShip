@@ -73,6 +73,9 @@ public class InventoryManager : MonoBehaviour
                                     itemtemp = new Bomb(damage, consumableType, BuyPrice, buyableType, id, name, itemType, description, capicity, sprite);
                                     break;
                                 case ConsumableType.FastMove:
+                                    Vector2 startPoint = GameObject.Find("Player").GetComponent<Transform>().position; //玩家当前位置，使用时需要更新
+                                    Vector2 endPoint = GameObject.Find("BornPlace").GetComponent<Transform>().position; //出生点
+                                    itemtemp = new FastMove(startPoint, endPoint, consumableType, BuyPrice, buyableType, id, name, itemType, description, capicity, sprite);
                                     break;
                             }
                             break;

@@ -47,5 +47,18 @@
     "ConsumableType": 0,
     "HP": 0,
     "OP": 100
+  },
+
+  {
+    "Id": 5,
+    "Name": "fastMove",
+    "ItemType": 0,
+    "Description": "飞雷神！",
+    "Capicity": 10,
+    "Sprite": "Sprites/Items/FastMove",
+    "BuyableType": 0,
+    "BuyPrice": 500,
+    "ConsumableType": 2
   }
+
 ]
